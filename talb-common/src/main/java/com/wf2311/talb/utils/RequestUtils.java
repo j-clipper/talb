@@ -1,0 +1,191 @@
+package com.wf2311.talb.utils;
+
+
+import com.google.common.base.Strings;
+import com.wf2311.talb.base.Instance;
+import com.wf2311.talb.base.TalbRequest;
+
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import static com.wf2311.talb.base.TalbRequest.*;
+
+
+/**
+ * @author <a href="mailto:wf2311@163.com">wf2311</a>
+ * @since 2022/1/12 11:53.
+ */
+public class RequestUtils {
+
+    public static final String ITERABLE_TO_STRING_SPLIT = ",";
+
+    private static final String JSON_ARRAY_START_SIGN = "[";
+    private static final String JSON_ARRAY_END_SIGN = "]";
+
+    /**
+     * 请求中携带的直接访问Instance的ip的值，会依次在Header、Cookie、QueryParam中进行查找
+     *
+     * @param request
+     * @return
+     */
+    public static String findDirectIpAddress(TalbRequest request) {
+        Object exist = findAttributeValue(request, DIRECT_IP_KEY);
+        if (exist != null) {
+            return (String) exist;
+        }
+        return findKeyValueInHeaderAndCookieAndQueryParam(request, DIRECT_IP_KEY);
+    }
+
+    /**
+     * 请求中携带的优先选择Instance网段的值，先在Attribute中查找，如果不存在再依次在Header、Cookie、QueryParam中进行查找，多个之间用英文逗号进行分隔
+     *
+     * @param request
+     * @return
+     */
+    public static Set<String> findPreferredNetworks(TalbRequest request) {
+        Object exist = findAttributeValue(request, PREFERRED_NETWORK_KEY);
+        if (exist != null) {
+            if(exist instanceof Set) {
+                return (Set<String>) exist;
+            }
+            if(exist instanceof String) {
+                return parseSet((String) exist);
+            }
+        }
+        String value = findKeyValueInHeaderAndCookieAndQueryParam(request, PREFERRED_NETWORK_KEY);
+        if (Strings.isNullOrEmpty(value)) {
+            return Collections.emptySet();
+        }
+        return parseSet(value);
+    }
+
+    private static Set<String> parseSet(String value) {
+        if (value.startsWith(JSON_ARRAY_START_SIGN) && value.endsWith(JSON_ARRAY_END_SIGN)) {
+            return new HashSet<>(JsonUtils.parseArray(value, String.class));
+        }
+        return Arrays.stream(value.split(ITERABLE_TO_STRING_SPLIT)).filter(s -> !Strings.isNullOrEmpty(s)).collect(Collectors.toSet());
+    }
+
+    /**
+     * 请求中携带的优先选择Instance网段的值，先在Attribute中查找，如果不存在再依次在Header、Cookie、QueryParam中进行查找，多个之间用英文逗号进行分隔
+     *
+     * @param request
+     * @return
+     */
+    public static String findRequestId(TalbRequest request) {
+        String value = (String) findAttributeValue(request, REQUEST_ID_KEY);
+        if (!Strings.isNullOrEmpty(value)) {
+            return value;
+        }
+        return findKeyValueInHeaderAndCookie(request, REQUEST_ID_KEY);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private static String findKeyValueInHeaderAndCookieAndQueryParam(TalbRequest request, String key) {
+        return filterFirst(s -> !Strings.isNullOrEmpty(s)
+                , () -> findHeaderValue(request, key)
+                , () -> findCookieValue(request, key), () -> findQueryParamValue(request, key));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static String findKeyValueInHeaderAndCookie(TalbRequest request, String key) {
+        return filterFirst(s -> !Strings.isNullOrEmpty(s)
+                , () -> findHeaderValue(request, key)
+                , () -> findCookieValue(request, key));
+    }
+
+
+    private static String findHeaderValue(TalbRequest request, String key) {
+        if (request == null || request.getHeaders() == null) {
+            return null;
+        }
+        return request.getHeader(key);
+    }
+
+
+    private static String findCookieValue(TalbRequest request, String key) {
+        if (request == null || request.getCookies() == null) {
+            return null;
+        }
+        return request.getCookie(key);
+    }
+
+    private static String findQueryParamValue(TalbRequest request, String key) {
+        if (request == null || request.getUri() == null) {
+            return null;
+        }
+        return request.getQueryParam(key);
+    }
+
+    private static Object findAttributeValue(TalbRequest request, String key) {
+        if (request == null || request.getAttributes() == null) {
+            return null;
+        }
+        Object v = request.getAttributes().get(key);
+        if (v == null) {
+            return null;
+        }
+        return v;
+    }
+
+    /**
+     * 判断服务实例的ip是不是在指定的网段里面，匹配规则：正则匹配或前缀匹配
+     *
+     * @param instance          实例
+     * @param preferredNetworks 首选网络
+     * @return true/false
+     */
+    public static boolean isMatchAny(Instance instance, Set<String> preferredNetworks) {
+        return preferredNetworks.stream().anyMatch(p -> isMatch(instance, p));
+    }
+
+    /**
+     * 判断服务实例的ip是不是属于指定的网段，匹配规则：正则匹配或前缀匹配
+     *
+     * @param instance         实例
+     * @param preferredNetwork 首选网络
+     * @return true/false
+     */
+    public static boolean isMatch(Instance instance, String preferredNetwork) {
+        final String hostAddress = instance.getHost();
+        return hostAddress.matches(preferredNetwork) || hostAddress.startsWith(preferredNetwork);
+    }
+
+    @SafeVarargs
+    private static <T> T filterFirst(Predicate<T> predicate, Supplier<T>... suppliers) {
+        for (Supplier<T> supplier : suppliers) {
+            if (supplier == null) {
+                continue;
+            }
+            T v = supplier.get();
+            if (predicate == null) {
+                return v;
+            }
+            if (predicate.test(v)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    private static <T> List<T> filterAll(Predicate<T> predicate, Supplier<T>... suppliers) {
+        List<T> result = new ArrayList<>();
+        for (Supplier<T> supplier : suppliers) {
+            if (supplier == null) {
+                continue;
+            }
+            T v = supplier.get();
+            if (predicate == null) {
+                result.add(v);
+                continue;
+            }
+            if (predicate.test(v)) {
+                result.add(v);
+            }
+        }
+        return result;
+    }
+}

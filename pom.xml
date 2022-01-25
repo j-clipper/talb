@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.wf2311</groupId>
+        <artifactId>common-lib-parent</artifactId>
+        <version>2021.04-SNAPSHOT</version>
+    </parent>
+    <artifactId>talb</artifactId>
+    <version>2022.01-SNAPSHOT</version>
+    <modules>
+        <module>talb-adapter</module>
+        <module>talb-common</module>
+        <module>talb-loadbalance</module>
+        <module>talb-trace</module>
+        <module>talb-spring-cloud-starters</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+
+        <dubbo.version>2.7.12</dubbo.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-loadbalance</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-trace</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-trace-dubbo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-trace-feign</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-trace-spring-rest-template</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-trace-spring-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-trace-spring-webflux</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-adapter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-adapter-spring-boot-default</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-adapter-spring-cloud-default</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-adapter-spring-cloud-gateway</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-adapter-spring-cloud-openfeign</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.wf2311</groupId>
+                <artifactId>talb-adapter-spring-cloud-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>2.12.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
