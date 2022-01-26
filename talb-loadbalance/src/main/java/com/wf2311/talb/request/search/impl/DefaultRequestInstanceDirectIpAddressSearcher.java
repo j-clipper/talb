@@ -12,13 +12,6 @@ public class DefaultRequestInstanceDirectIpAddressSearcher implements RequestIns
 
     @Override
     public String search(TalbRequest request) {
-        String directIpAddress = RequestUtils.findDirectIpAddress(request);
-
-        if (directIpAddress != null) {
-            //如果找到preferredNetworks后，将其缓存到TalbRequest中，用于透传
-            request.putAttribute(TalbRequest.DIRECT_IP_KEY, directIpAddress);
-        }
-        return directIpAddress;
+        return RequestUtils.findDirectIpAddress(request);
     }
-
 }

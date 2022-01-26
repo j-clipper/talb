@@ -14,13 +14,6 @@ public class DefaultRequestInstancePreferredNetworksSearcher implements RequestI
 
     @Override
     public Set<String> search(TalbRequest request) {
-
-        Set<String> preferredNetworks = RequestUtils.findPreferredNetworks(request);
-        if (preferredNetworks != null && preferredNetworks.size() > 0) {
-            //如果找到preferredNetworks后，将其缓存到TalbRequest中，用于透传
-            request.putAttribute(TalbRequest.PREFERRED_NETWORK_KEY, preferredNetworks);
-        }
-        return preferredNetworks;
+        return RequestUtils.findPreferredNetworks(request);
     }
-
 }

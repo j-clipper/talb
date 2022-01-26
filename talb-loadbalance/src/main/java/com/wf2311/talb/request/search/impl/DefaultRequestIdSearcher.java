@@ -9,16 +9,9 @@ import com.wf2311.talb.utils.RequestUtils;
  * @since 2022/1/13 20:44.
  */
 public class DefaultRequestIdSearcher implements RequestIdSearcher {
-
     @Override
     public String search(TalbRequest request) {
-
-        String requestId = RequestUtils.findRequestId(request);
-        if (requestId != null) {
-            //如果找到requestId后，将其缓存到TalbRequest中，用于透传
-            request.putAttribute(TalbRequest.REQUEST_ID_KEY, requestId);
-        }
-        return requestId;
+        return RequestUtils.findRequestId(request);
     }
 
 }

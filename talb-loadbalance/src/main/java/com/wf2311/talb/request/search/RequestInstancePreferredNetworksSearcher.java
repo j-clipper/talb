@@ -1,6 +1,8 @@
 package com.wf2311.talb.request.search;
 
 
+import com.wf2311.talb.base.TalbRequest;
+
 import java.util.Set;
 
 /**
@@ -8,4 +10,20 @@ import java.util.Set;
  * @since 2022/1/13 20:48.
  */
 public interface RequestInstancePreferredNetworksSearcher extends RequestContentSearcher<Set<String>> {
+
+    /**
+     * 搜索并传递
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    default Set<String> searchAndTransmit(TalbRequest request) {
+        Set<String> preferredNetworks = search(request);
+        if (preferredNetworks != null && preferredNetworks.size() > 0) {
+            //如果找到preferredNetworks后，将其缓存到TalbRequest中，用于透传
+            request.putAttribute(TalbRequest.PREFERRED_NETWORK_KEY, preferredNetworks);
+        }
+        return preferredNetworks;
+    }
 }

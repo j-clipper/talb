@@ -7,10 +7,10 @@ import com.wf2311.talb.factory.GlobalPreferredNetworkInstanceFilterConfigProvide
 import com.wf2311.talb.factory.RequestDirectIpInstanceFilterConfigProvider;
 import com.wf2311.talb.factory.RequestPreferredNetworkInstanceFilterConfigProvider;
 import com.wf2311.talb.factory.base.TalbObjectFactory;
-import com.wf2311.talb.filter.CompositeInstanceFilter;
-import com.wf2311.talb.filter.GlobalPreferredNetworkInstanceFilter;
-import com.wf2311.talb.filter.RequestDirectIpInstanceFilter;
-import com.wf2311.talb.filter.RequestPreferredNetworkInstanceFilter;
+import com.wf2311.talb.loadbalance.filter.CompositeInstanceFilter;
+import com.wf2311.talb.loadbalance.filter.GlobalPreferredNetworkInstanceFilter;
+import com.wf2311.talb.loadbalance.filter.RequestDirectIpInstanceFilter;
+import com.wf2311.talb.loadbalance.filter.RequestPreferredNetworkInstanceFilter;
 import com.wf2311.talb.loadbalance.ConsistentHashLoadBalancer;
 import com.wf2311.talb.loadbalance.FilterInstanceLoadBalancer;
 

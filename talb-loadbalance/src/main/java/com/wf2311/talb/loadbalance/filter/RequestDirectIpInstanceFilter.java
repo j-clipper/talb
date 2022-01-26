@@ -1,4 +1,4 @@
-package com.wf2311.talb.filter;
+package com.wf2311.talb.loadbalance.filter;
 
 import com.wf2311.talb.base.Instance;
 import com.wf2311.talb.base.InstanceFilter;
@@ -47,12 +47,21 @@ public class RequestDirectIpInstanceFilter implements InstanceFilter {
     }
 
     @Override
+    public List<Instance> filter(List<Instance> instances, TalbRequest request) {
+        return doFilter(instances, request);
+    }
+
+    @Override
     public List<Instance> doFilter(@NotEmpty List<Instance> instances, @NotNull TalbRequest request) {
-        if (configProvider == null || !configProvider.isAllowDirectIp()) {
+        if (configProvider == null || searcher == null || request == null || !configProvider.isAllowDirectIp()) {
             return instances;
         }
-        String ipAddress = searcher.search(request);
+        //搜索条件置于前面是为了在instances.size()=0时将request信息进行查找传递
+        String ipAddress = searcher.searchAndTransmit(request);
         if (ipAddress == null) {
+            return instances;
+        }
+        if (instances == null || instances.size() == 1) {
             return instances;
         }
         List<Instance> matchList = instances.stream().filter(instance -> ipAddress.equals(instance.getHost())).collect(Collectors.toList());

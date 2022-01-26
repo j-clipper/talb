@@ -14,4 +14,16 @@ public interface RequestContentSearcher<C> {
      * @return
      */
     C search(TalbRequest request);
+
+    /**
+     * 搜索并传递
+     *
+     * @param request
+     * @return
+     */
+    default C searchAndTransmit(TalbRequest request) {
+        throw new UnsupportedOperationException();
+    }
+
+
 }

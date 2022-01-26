@@ -1,4 +1,4 @@
-package com.wf2311.talb.filter;
+package com.wf2311.talb.loadbalance.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.wf2311.talb.base.Instance;
@@ -50,12 +50,21 @@ public class RequestPreferredNetworkInstanceFilter implements InstanceFilter {
     }
 
     @Override
+    public List<Instance> filter(List<Instance> instances, TalbRequest request) {
+        return doFilter(instances, request);
+    }
+
+    @Override
     public List<Instance> doFilter(@NotEmpty List<Instance> instances, @NotNull TalbRequest request) {
-        if (configProvider == null || !configProvider.isAllowPreferredNetworks()) {
+        if (configProvider == null || searcher == null || request == null || !configProvider.isAllowPreferredNetworks()) {
             return instances;
         }
-        Set<String> preferredNetworks = searcher.search(request);
+        //搜索条件置于前面是为了在instances.size()=0时将request信息进行查找传递
+        Set<String> preferredNetworks = searcher.searchAndTransmit(request);
         if (preferredNetworks == null || preferredNetworks.isEmpty()) {
+            return instances;
+        }
+        if (instances == null || instances.size() == 1) {
             return instances;
         }
         List<Instance> matchList = instances.stream().filter(i -> RequestUtils.isMatchAny(i, preferredNetworks)).collect(Collectors.toList());

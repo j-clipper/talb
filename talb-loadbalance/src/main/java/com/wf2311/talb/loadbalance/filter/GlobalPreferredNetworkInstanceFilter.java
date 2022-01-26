@@ -1,4 +1,4 @@
-package com.wf2311.talb.filter;
+package com.wf2311.talb.loadbalance.filter;
 
 import com.wf2311.common.utils.CollectionUtils;
 import com.wf2311.talb.base.Instance;
