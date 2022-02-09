@@ -36,6 +36,11 @@ public class CompositeInstanceFilter implements InstanceFilter {
     }
 
     @Override
+    public List<Instance> filter(List<Instance> instances, TalbRequest request) {
+        return doFilter(instances, request);
+    }
+
+    @Override
     public List<Instance> doFilter(List<Instance> instances, TalbRequest request) {
 
         if (CollectionUtils.isEmpty(delegates)) {

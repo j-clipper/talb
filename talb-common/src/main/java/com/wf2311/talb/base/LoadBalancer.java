@@ -18,8 +18,8 @@ public interface LoadBalancer {
      * @return
      */
     default Instance choose(List<Instance> instances, TalbRequest request) {
-        if (instances.size() == 1 || request == null) {
-            return instances.get(0);
+        if (request == null) {
+            return null;
         }
         return doChoose(instances, request);
     }
