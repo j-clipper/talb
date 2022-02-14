@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.wf2311</groupId>
-        <artifactId>common-lib-parent</artifactId>
-        <version>2021.04-SNAPSHOT</version>
+        <groupId>com.wf2311.jclipper</groupId>
+        <artifactId>jclipper-framework-parent</artifactId>
+        <version>2022.1-SNAPSHOT</version>
     </parent>
     <artifactId>talb</artifactId>
-    <version>2022.01-SNAPSHOT</version>
+    <version>2022.1-SNAPSHOT</version>
     <modules>
         <module>talb-adapter</module>
         <module>talb-common</module>
@@ -30,83 +30,83 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-loadbalance</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-trace</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-trace-dubbo</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-trace-feign</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-trace-spring-rest-template</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-trace-spring-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-trace-spring-webflux</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-adapter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-adapter</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-adapter-spring-boot-default</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-adapter-spring-cloud-default</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
 
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-adapter-spring-cloud-gateway</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-adapter-spring-cloud-openfeign</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.wf2311</groupId>
+                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-adapter-spring-cloud-web</artifactId>
                 <version>${project.version}</version>
             </dependency>

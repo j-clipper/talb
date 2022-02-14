@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.wf2311</groupId>
+        <groupId>com.wf2311.jclipper</groupId>
         <artifactId>talb-adapter</artifactId>
-        <version>2022.01-SNAPSHOT</version>
+        <version>2022.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,15 +18,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.wf2311</groupId>
+            <groupId>com.wf2311.jclipper</groupId>
             <artifactId>talb-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.wf2311</groupId>
+            <groupId>com.wf2311.jclipper</groupId>
             <artifactId>talb-loadbalance</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.wf2311</groupId>
+            <groupId>com.wf2311.jclipper</groupId>
             <artifactId>talb-trace-dubbo</artifactId>
         </dependency>
         <dependency>
@@ -39,7 +39,7 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.wf2311</groupId>
+            <groupId>com.wf2311.jclipper</groupId>
             <artifactId>talb-adapter-spring-boot-default</artifactId>
         </dependency>
     </dependencies>
