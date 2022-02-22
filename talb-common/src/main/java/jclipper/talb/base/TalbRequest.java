@@ -12,18 +12,24 @@ public interface TalbRequest {
     /**
      * 请求中携带的直接访问ServiceInstance的ip的key，会依次在Header、Cookie、QueryParam中进行查找
      */
-    String DIRECT_IP_KEY = "_g_direct_ip";
+    String PREFERRED_IP_KEY = "_g_direct_ip";
 
     /**
      * 请求中携带的优先选择ServiceInstance网段的key，会依次在Header、Cookie、QueryParam中进行查找
      */
-    String PREFERRED_NETWORK_KEY = "_g_preferred_networks";
+    String PREFERRED_NETWORK_KEY = "_g_preferred_network";
 
+
+    /**
+     * 请求中携带的优先选择ServiceInstance版本号的解压，会依次在Header、Cookie、QueryParam中进行查找
+     */
+    String PREFERRED_VERSION_KEY = "_g_service_version";
 
     /**
      * 请求中携带的requestId的key，会依次在Header、Cookie、Attributes中进行查找
      */
     String REQUEST_ID_KEY = "_g_request_id";
+
 
     /**
      * serviceId

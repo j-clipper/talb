@@ -8,7 +8,7 @@ import jclipper.talb.factory.base.ConfigProvider;
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 10:08.
  */
-public interface RequestPreferredNetworkInstanceFilterConfigProvider extends ConfigProvider {
+public interface RequestPreferredNetworkConfigProvider extends ConfigProvider {
 
     /**
      * 是否允许优先选择ServiceInstance网段

@@ -58,8 +58,6 @@ public interface Instance {
         return emptyMap();
     }
 
-    ;
-
     /**
      * ID
      *

@@ -52,11 +52,16 @@ public class TalbLoadBalanceProperties implements Serializable {
         /**
          * 是否允许设置直接访问ServiceInstance的ip
          */
-        private boolean allowDirectIp = false;
+        private boolean allowPreferredIp = false;
         /**
          * 是否允许优先选择ServiceInstance网段
          */
-        private boolean allowPreferredNetworks = false;
+        private boolean allowPreferredNetwork = false;
+
+        /**
+         * 是否允许优先选择ServiceInstance版本号
+         */
+        private boolean allowPreferredVersion = true;
     }
 
 

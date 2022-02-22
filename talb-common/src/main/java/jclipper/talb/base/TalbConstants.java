@@ -30,18 +30,16 @@ public interface TalbConstants {
 
     String UNKNOWN = "NONE";
 
-    String WEBFLUX_EXCHANGE = "exchange";
-
     String TALB_CONTEXT = "talbServerContext";
 
     String TALB_REQUEST = "talbServerRequest";
 
     String TALB_CONTEXT_ATTRS_FOR_NEXT = "talbContextAttrsForNext";
 
-    String HTTP_SERVLET_REQUEST = "httpServletRequest";
-
     String INSTANCE_FILTER_MARKED_KEY = "_slb_instance_filter_marked_list";
 
     String SPRING_APP_NAME_KEY = "spring.application.name";
+
+    String INSTANCE_VERSION_KEY = "version";
 
 }

@@ -2,19 +2,19 @@ package jclipper.talb.adapter.spring.boot.factory;
 
 
 import jclipper.talb.adapter.spring.boot.configuration.TalbLoadBalanceProperties;
-import jclipper.talb.factory.GlobalPreferredNetworkInstanceFilterConfigProvider;
+import jclipper.talb.factory.GlobalPreferredNetworkConfigProvider;
 
 import java.util.Set;
 
 import static java.util.Collections.emptySet;
 
 /**
- * 默认的GlobalPreferredNetworkInstanceFilterConfigProvider
+ * 默认的GlobalPreferredNetworkConfigProvider
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 11:17.
  */
-public class DefaultGlobalPreferredNetworkConfigProvider implements GlobalPreferredNetworkInstanceFilterConfigProvider {
+public class DefaultGlobalPreferredNetworkConfigProvider implements GlobalPreferredNetworkConfigProvider {
     private final TalbLoadBalanceProperties properties;
 
     public DefaultGlobalPreferredNetworkConfigProvider(TalbLoadBalanceProperties properties) {

@@ -1,17 +1,15 @@
 package jclipper.talb.adapter.spring.boot.configuration;
 
 import jclipper.talb.adapter.spring.boot.factory.DefaultGlobalPreferredNetworkConfigProvider;
-import jclipper.talb.adapter.spring.boot.factory.DefaultRequestDirectIpConfigProvider;
+import jclipper.talb.adapter.spring.boot.factory.DefaultRequestPreferredIpConfigProvider;
 import jclipper.talb.adapter.spring.boot.factory.DefaultRequestPreferredNetworkConfigProvider;
+import jclipper.talb.adapter.spring.boot.factory.DefaultRequestPreferredVersionConfigProvider;
 import jclipper.talb.base.InstanceFilter;
 import jclipper.talb.base.LoadBalancer;
 import jclipper.talb.factory.*;
 import jclipper.talb.factory.base.TalbObjectFactory;
 import jclipper.talb.factory.internal.DefaultConsistentHashLoadBalancerConfigProvider;
-import jclipper.talb.loadbalance.filter.CompositeInstanceFilter;
-import jclipper.talb.loadbalance.filter.GlobalPreferredNetworkInstanceFilter;
-import jclipper.talb.loadbalance.filter.RequestDirectIpInstanceFilter;
-import jclipper.talb.loadbalance.filter.RequestPreferredNetworkInstanceFilter;
+import jclipper.talb.loadbalance.filter.*;
 import jclipper.talb.loadbalance.ConsistentHashLoadBalancer;
 import jclipper.talb.loadbalance.FilterInstanceLoadBalancer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -30,28 +28,38 @@ import java.util.List;
 public class TalbLoadBalanceDefaultConfiguration {
     @Bean
     @ConditionalOnBean(TalbLoadBalanceProperties.class)
-    @ConditionalOnMissingBean(RequestDirectIpInstanceFilterConfigProvider.class)
-    public RequestDirectIpInstanceFilterConfigProvider requestDirectIpInstanceFilterConfigProvider(TalbLoadBalanceProperties properties) {
-        DefaultRequestDirectIpConfigProvider requestDirectIpConfigProvider = new DefaultRequestDirectIpConfigProvider(properties);
-        TalbObjectFactory.setDefaultObject(RequestDirectIpInstanceFilterConfigProvider.class, requestDirectIpConfigProvider);
-        return requestDirectIpConfigProvider;
+    @ConditionalOnMissingBean(RequestPreferredIpConfigProvider.class)
+    public RequestPreferredIpConfigProvider requestPreferredIpConfigProvider(TalbLoadBalanceProperties properties) {
+        DefaultRequestPreferredIpConfigProvider requestPreferredIpConfigProvider = new DefaultRequestPreferredIpConfigProvider(properties);
+        TalbObjectFactory.setDefaultObject(RequestPreferredIpConfigProvider.class, requestPreferredIpConfigProvider);
+        return requestPreferredIpConfigProvider;
     }
 
     @Bean
     @ConditionalOnBean(TalbLoadBalanceProperties.class)
-    @ConditionalOnMissingBean(RequestPreferredNetworkInstanceFilterConfigProvider.class)
-    public RequestPreferredNetworkInstanceFilterConfigProvider requestPreferredNetworkInstanceFilterConfigProvider(TalbLoadBalanceProperties properties) {
+    @ConditionalOnMissingBean(RequestPreferredNetworkConfigProvider.class)
+    public RequestPreferredNetworkConfigProvider requestPreferredNetworkConfigProvider(TalbLoadBalanceProperties properties) {
         DefaultRequestPreferredNetworkConfigProvider requestPreferredNetworkConfigProvider = new DefaultRequestPreferredNetworkConfigProvider(properties);
-        TalbObjectFactory.setDefaultObject(RequestPreferredNetworkInstanceFilterConfigProvider.class, requestPreferredNetworkConfigProvider);
+        TalbObjectFactory.setDefaultObject(RequestPreferredNetworkConfigProvider.class, requestPreferredNetworkConfigProvider);
         return requestPreferredNetworkConfigProvider;
     }
 
+
     @Bean
     @ConditionalOnBean(TalbLoadBalanceProperties.class)
-    @ConditionalOnMissingBean(GlobalPreferredNetworkInstanceFilterConfigProvider.class)
-    public GlobalPreferredNetworkInstanceFilterConfigProvider globalPreferredNetworkInstanceFilterConfigProvider(TalbLoadBalanceProperties properties) {
+    @ConditionalOnMissingBean(RequestPreferredVersionConfigProvider.class)
+    public RequestPreferredVersionConfigProvider requestPreferredVersionConfigProvider(TalbLoadBalanceProperties properties) {
+        DefaultRequestPreferredVersionConfigProvider requestPreferredVersionConfigProvider = new DefaultRequestPreferredVersionConfigProvider(properties);
+        TalbObjectFactory.setDefaultObject(DefaultRequestPreferredVersionConfigProvider.class, requestPreferredVersionConfigProvider);
+        return requestPreferredVersionConfigProvider;
+    }
+
+    @Bean
+    @ConditionalOnBean(TalbLoadBalanceProperties.class)
+    @ConditionalOnMissingBean(GlobalPreferredNetworkConfigProvider.class)
+    public GlobalPreferredNetworkConfigProvider globalPreferredNetworkConfigProvider(TalbLoadBalanceProperties properties) {
         DefaultGlobalPreferredNetworkConfigProvider globalPreferredNetworkConfigProvider = new DefaultGlobalPreferredNetworkConfigProvider(properties);
-        TalbObjectFactory.setDefaultObject(GlobalPreferredNetworkInstanceFilterConfigProvider.class, globalPreferredNetworkConfigProvider);
+        TalbObjectFactory.setDefaultObject(GlobalPreferredNetworkConfigProvider.class, globalPreferredNetworkConfigProvider);
         return globalPreferredNetworkConfigProvider;
     }
 
@@ -66,23 +74,31 @@ public class TalbLoadBalanceDefaultConfiguration {
 
 
     @Bean
-    @ConditionalOnBean(RequestDirectIpInstanceFilterConfigProvider.class)
-    @ConditionalOnMissingBean(RequestDirectIpInstanceFilter.class)
-    public InstanceFilter requestDirectIpInstanceFilter(RequestDirectIpInstanceFilterConfigProvider configProvider) {
-        return new RequestDirectIpInstanceFilter(configProvider);
+    @ConditionalOnBean(RequestPreferredIpConfigProvider.class)
+    @ConditionalOnMissingBean(RequestPreferredIpInstanceFilter.class)
+    public InstanceFilter requestPreferredInstanceFilter(RequestPreferredIpConfigProvider configProvider) {
+        return new RequestPreferredIpInstanceFilter(configProvider);
     }
 
     @Bean
-    @ConditionalOnBean(RequestPreferredNetworkInstanceFilterConfigProvider.class)
+    @ConditionalOnBean(RequestPreferredNetworkConfigProvider.class)
     @ConditionalOnMissingBean(RequestPreferredNetworkInstanceFilter.class)
-    public InstanceFilter requestPreferredNetworkServiceInstanceFilter(RequestPreferredNetworkInstanceFilterConfigProvider configProvider) {
+    public InstanceFilter requestPreferredNetworkInstanceFilter(RequestPreferredNetworkConfigProvider configProvider) {
         return new RequestPreferredNetworkInstanceFilter(configProvider);
+    }
+
+
+    @Bean
+    @ConditionalOnBean(RequestPreferredVersionConfigProvider.class)
+    @ConditionalOnMissingBean(RequestPreferredVersionInstanceFilter.class)
+    public InstanceFilter requestPreferredVersionInstanceFilter(RequestPreferredVersionConfigProvider configProvider) {
+        return new RequestPreferredVersionInstanceFilter(configProvider);
     }
 
     @Bean
     @ConditionalOnBean(TalbLoadBalanceProperties.class)
     @ConditionalOnMissingBean(GlobalPreferredNetworkInstanceFilter.class)
-    public InstanceFilter globalPreferredNetworkServiceInstanceFilter(GlobalPreferredNetworkInstanceFilterConfigProvider configProvider) {
+    public InstanceFilter globalPreferredNetworkInstanceFilter(GlobalPreferredNetworkConfigProvider configProvider) {
         return new GlobalPreferredNetworkInstanceFilter(configProvider);
     }
 

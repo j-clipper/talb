@@ -1,13 +1,13 @@
 package jclipper.talb.adapter.spring.boot.factory;
 
 import jclipper.talb.adapter.spring.boot.configuration.TalbLoadBalanceProperties;
-import jclipper.talb.factory.RequestPreferredNetworkInstanceFilterConfigProvider;
+import jclipper.talb.factory.RequestPreferredNetworkConfigProvider;
 
 /**
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 11:16.
  */
-public class DefaultRequestPreferredNetworkConfigProvider implements RequestPreferredNetworkInstanceFilterConfigProvider {
+public class DefaultRequestPreferredNetworkConfigProvider implements RequestPreferredNetworkConfigProvider {
 
     private final TalbLoadBalanceProperties properties;
 
@@ -17,6 +17,6 @@ public class DefaultRequestPreferredNetworkConfigProvider implements RequestPref
 
     @Override
     public boolean isAllowPreferredNetworks() {
-        return properties.getRequest() != null && properties.getRequest().isAllowPreferredNetworks();
+        return properties.getRequest() != null && properties.getRequest().isAllowPreferredNetwork();
     }
 }

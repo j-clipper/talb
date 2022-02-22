@@ -30,12 +30,8 @@ public class RequestUtils {
      * @param request
      * @return
      */
-    public static String findDirectIpAddress(TalbRequest request) {
-        Object exist = findAttributeValue(request, DIRECT_IP_KEY);
-        if (exist != null) {
-            return (String) exist;
-        }
-        return findKeyValueInHeaderAndCookieAndQueryParam(request, DIRECT_IP_KEY);
+    public static Set<String> findPreferredIpAddress(TalbRequest request) {
+        return findSetValue(request, PREFERRED_IP_KEY);
     }
 
     /**
@@ -45,16 +41,31 @@ public class RequestUtils {
      * @return
      */
     public static Set<String> findPreferredNetworks(TalbRequest request) {
-        Object exist = findAttributeValue(request, PREFERRED_NETWORK_KEY);
+        return findSetValue(request, PREFERRED_NETWORK_KEY);
+    }
+
+
+    /**
+     * 请求中携带的直接访问Instance的版本号的值，会依次在Header、Cookie、QueryParam中进行查找
+     *
+     * @param request
+     * @return
+     */
+    public static Set<String> findPreferredVersions(TalbRequest request) {
+        return findSetValue(request, PREFERRED_VERSION_KEY);
+    }
+
+    public static Set<String> findSetValue(TalbRequest request, String key) {
+        Object exist = findAttributeValue(request, key);
         if (exist != null) {
-            if(exist instanceof Set) {
+            if (exist instanceof Set) {
                 return (Set<String>) exist;
             }
-            if(exist instanceof String) {
+            if (exist instanceof String) {
                 return parseSet((String) exist);
             }
         }
-        String value = findKeyValueInHeaderAndCookieAndQueryParam(request, PREFERRED_NETWORK_KEY);
+        String value = findKeyValueInHeaderAndCookieAndQueryParam(request, key);
         if (Strings.isNullOrEmpty(value)) {
             return Collections.emptySet();
         }
@@ -138,8 +149,8 @@ public class RequestUtils {
      * @param preferredNetworks 首选网络
      * @return true/false
      */
-    public static boolean isMatchAny(Instance instance, Set<String> preferredNetworks) {
-        return preferredNetworks.stream().anyMatch(p -> isMatch(instance, p));
+    public static boolean isMatchAnyNetwork(Instance instance, Set<String> preferredNetworks) {
+        return preferredNetworks.stream().anyMatch(p -> isNetworkMatch(instance, p));
     }
 
     /**
@@ -149,7 +160,7 @@ public class RequestUtils {
      * @param preferredNetwork 首选网络
      * @return true/false
      */
-    public static boolean isMatch(Instance instance, String preferredNetwork) {
+    public static boolean isNetworkMatch(Instance instance, String preferredNetwork) {
         final String hostAddress = instance.getHost();
         return hostAddress.matches(preferredNetwork) || hostAddress.startsWith(preferredNetwork);
     }

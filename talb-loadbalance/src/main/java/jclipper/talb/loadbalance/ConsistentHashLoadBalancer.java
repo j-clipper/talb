@@ -129,8 +129,5 @@ public class ConsistentHashLoadBalancer implements LoadBalancer {
             }
             return hash;
         }
-
-
     }
-
 }

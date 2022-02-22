@@ -15,7 +15,7 @@ import static java.util.Collections.emptySet;
 public class DefaultTalbRequestAttributeTransferConfigProvider implements TalbRequestAttributeTransferConfigProvider {
     @Override
     public Set<String> whiteListKeys() {
-        return Sets.newHashSet(TalbRequest.DIRECT_IP_KEY, TalbRequest.PREFERRED_NETWORK_KEY, TalbRequest.REQUEST_ID_KEY);
+        return Sets.newHashSet(TalbRequest.PREFERRED_IP_KEY, TalbRequest.PREFERRED_NETWORK_KEY, TalbRequest.REQUEST_ID_KEY,TalbRequest.PREFERRED_VERSION_KEY);
     }
 
     @Override

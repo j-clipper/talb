@@ -3,13 +3,13 @@ package jclipper.talb.adapter.dubbo;
 import jclipper.talb.base.InstanceFilter;
 import jclipper.talb.base.LoadBalancer;
 import jclipper.talb.factory.ConsistentHashLoadBalancerConfigProvider;
-import jclipper.talb.factory.GlobalPreferredNetworkInstanceFilterConfigProvider;
-import jclipper.talb.factory.RequestDirectIpInstanceFilterConfigProvider;
-import jclipper.talb.factory.RequestPreferredNetworkInstanceFilterConfigProvider;
+import jclipper.talb.factory.GlobalPreferredNetworkConfigProvider;
+import jclipper.talb.factory.RequestPreferredIpConfigProvider;
+import jclipper.talb.factory.RequestPreferredNetworkConfigProvider;
 import jclipper.talb.factory.base.TalbObjectFactory;
 import jclipper.talb.loadbalance.filter.CompositeInstanceFilter;
 import jclipper.talb.loadbalance.filter.GlobalPreferredNetworkInstanceFilter;
-import jclipper.talb.loadbalance.filter.RequestDirectIpInstanceFilter;
+import jclipper.talb.loadbalance.filter.RequestPreferredIpInstanceFilter;
 import jclipper.talb.loadbalance.filter.RequestPreferredNetworkInstanceFilter;
 import jclipper.talb.loadbalance.ConsistentHashLoadBalancer;
 import jclipper.talb.loadbalance.FilterInstanceLoadBalancer;
@@ -25,11 +25,11 @@ public class TalbConfigInitializer {
 
 
     public static LoadBalancer initLoadBalancer() {
-        RequestDirectIpInstanceFilter requestDirectIpInstanceFilter = new RequestDirectIpInstanceFilter(TalbObjectFactory.getDefaultObject(RequestDirectIpInstanceFilterConfigProvider.class));
-        RequestPreferredNetworkInstanceFilter requestPreferredNetworkInstanceFilter = new RequestPreferredNetworkInstanceFilter(TalbObjectFactory.getDefaultObject(RequestPreferredNetworkInstanceFilterConfigProvider.class));
-        GlobalPreferredNetworkInstanceFilter globalPreferredNetworkInstanceFilter = new GlobalPreferredNetworkInstanceFilter(TalbObjectFactory.getDefaultObject(GlobalPreferredNetworkInstanceFilterConfigProvider.class));
+        RequestPreferredIpInstanceFilter requestPreferredIpInstanceFilter = new RequestPreferredIpInstanceFilter(TalbObjectFactory.getDefaultObject(RequestPreferredIpConfigProvider.class));
+        RequestPreferredNetworkInstanceFilter requestPreferredNetworkInstanceFilter = new RequestPreferredNetworkInstanceFilter(TalbObjectFactory.getDefaultObject(RequestPreferredNetworkConfigProvider.class));
+        GlobalPreferredNetworkInstanceFilter globalPreferredNetworkInstanceFilter = new GlobalPreferredNetworkInstanceFilter(TalbObjectFactory.getDefaultObject(GlobalPreferredNetworkConfigProvider.class));
         List<InstanceFilter> filters = new ArrayList<>();
-        filters.add(requestDirectIpInstanceFilter);
+        filters.add(requestPreferredIpInstanceFilter);
         filters.add(requestPreferredNetworkInstanceFilter);
         filters.add(globalPreferredNetworkInstanceFilter);
 

@@ -10,7 +10,7 @@ import java.util.Set;
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 10:12.
  */
-public interface GlobalPreferredNetworkInstanceFilterConfigProvider  extends ConfigProvider {
+public interface GlobalPreferredNetworkConfigProvider extends ConfigProvider {
     /**
      * 是否启用
      *
