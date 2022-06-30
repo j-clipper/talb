@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 支持servlet
+ * Servlet中处理Talb Trace的获取
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 1.3.5

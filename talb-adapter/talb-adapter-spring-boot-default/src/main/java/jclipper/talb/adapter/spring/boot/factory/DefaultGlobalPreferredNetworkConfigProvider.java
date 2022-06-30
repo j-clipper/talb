@@ -9,7 +9,7 @@ import java.util.Set;
 import static java.util.Collections.emptySet;
 
 /**
- * 默认的GlobalPreferredNetworkConfigProvider
+ * 默认的{@link GlobalPreferredNetworkConfigProvider}，从{@link TalbLoadBalanceProperties}中获取配置
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 11:17.

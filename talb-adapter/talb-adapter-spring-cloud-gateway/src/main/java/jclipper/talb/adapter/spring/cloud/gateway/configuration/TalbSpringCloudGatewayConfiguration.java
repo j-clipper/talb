@@ -24,11 +24,9 @@ public class TalbSpringCloudGatewayConfiguration {
 
     @Bean
     @ConditionalOnMissingBean({TalbReactiveLoadBalancerClientGlobalFilter.class})
-    @ConditionalOnBean(LoadBalancer.class)
     public TalbReactiveLoadBalancerClientGlobalFilter talbReactiveLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory
-            , GatewayLoadBalancerProperties properties, LoadBalancerProperties loadBalancerProperties
-            , LoadBalancer loadBalancer) {
-        return new TalbReactiveLoadBalancerClientGlobalFilter(clientFactory, properties, loadBalancerProperties, loadBalancer);
+            , GatewayLoadBalancerProperties properties, LoadBalancerProperties loadBalancerProperties) {
+        return new TalbReactiveLoadBalancerClientGlobalFilter(clientFactory, properties, loadBalancerProperties);
     }
 
     @Bean

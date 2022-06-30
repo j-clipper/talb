@@ -1,11 +1,16 @@
 package jclipper.talb.base;
 
 /**
+ * Talb常量
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 09:33.
  */
 public interface TalbConstants {
 
+    /**
+     * 初始SpanId值
+     */
     String INIT_SPAN_ID = "0";
 
     String TRACE_KEY = "traceId";

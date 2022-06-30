@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
  * @since 2022/1/12 09:11.
  */
 @Configuration
-@Import({TalbConfiguration.class,TalbLoadBalancerAutoConfiguration.class})
+@Import({TalbConfiguration.class, TalbLoadBalancerAutoConfiguration.class})
 public class TalbSpringCloudCommonConfiguration {
 
 

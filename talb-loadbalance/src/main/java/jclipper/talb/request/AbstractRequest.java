@@ -11,6 +11,8 @@ import java.util.Map;
 import static java.util.Collections.emptyMap;
 
 /**
+ * AbstractRequest
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 11:47.
  */

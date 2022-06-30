@@ -2,7 +2,6 @@ package jclipper.talb.adapter.spring.cloud.gateway;
 
 import jclipper.talb.adapter.spring.cloud.adapter.SpringCloudRequestDataRequest;
 import jclipper.talb.adapter.spring.cloud.loadbalancer.TalbReactorLoadBalancer;
-import jclipper.talb.base.LoadBalancer;
 import jclipper.talb.base.TalbConstants;
 import jclipper.talb.base.TalbRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +10,7 @@ import org.springframework.cloud.client.loadbalancer.*;
 import org.springframework.cloud.gateway.config.GatewayLoadBalancerProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.cloud.gateway.filter.ReactiveLoadBalancerClientFilter;
 import org.springframework.cloud.gateway.support.DelegatingServiceInstance;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 使用 {@link TalbReactorLoadBalancer}进行服务实例的负载均衡选择，替代 {@link ReactiveLoadBalancerClientFilter}
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/12 17:19.
  */
@@ -35,7 +37,7 @@ public class TalbReactiveLoadBalancerClientGlobalFilter implements GlobalFilter,
     /**
      * Order of filter.
      */
-    public static final int LOAD_BALANCER_CLIENT_FILTER_ORDER = 10150;
+    public static final int TALB_LOAD_BALANCER_CLIENT_FILTER_ORDER = ReactiveLoadBalancerClientFilter.LOAD_BALANCER_CLIENT_FILTER_ORDER - 1;
 
     private final LoadBalancerClientFactory clientFactory;
 
@@ -43,20 +45,16 @@ public class TalbReactiveLoadBalancerClientGlobalFilter implements GlobalFilter,
 
     private final LoadBalancerProperties loadBalancerProperties;
 
-    private final LoadBalancer loadBalancer;
-
-    public TalbReactiveLoadBalancerClientGlobalFilter(LoadBalancerClientFactory clientFactory,
-                                                      GatewayLoadBalancerProperties properties, LoadBalancerProperties loadBalancerProperties,
-                                                      LoadBalancer loadBalancer) {
+    public TalbReactiveLoadBalancerClientGlobalFilter(LoadBalancerClientFactory clientFactory
+            , GatewayLoadBalancerProperties properties, LoadBalancerProperties loadBalancerProperties) {
         this.clientFactory = clientFactory;
         this.properties = properties;
         this.loadBalancerProperties = loadBalancerProperties;
-        this.loadBalancer = loadBalancer;
     }
 
     @Override
     public int getOrder() {
-        return LOAD_BALANCER_CLIENT_FILTER_ORDER - 1;
+        return TALB_LOAD_BALANCER_CLIENT_FILTER_ORDER;
     }
 
     @Override
@@ -83,8 +81,8 @@ public class TalbReactiveLoadBalancerClientGlobalFilter implements GlobalFilter,
         return choose(lbRequest, serviceId, supportedLifecycleProcessors, exchange).doOnNext(response -> {
 
                     if (!response.hasServer()) {
-                        supportedLifecycleProcessors.forEach(lifecycle -> lifecycle
-                                .onComplete(new CompletionContext<>(CompletionContext.Status.DISCARD, lbRequest, response)));
+                        supportedLifecycleProcessors.forEach(lifecycle ->
+                                lifecycle.onComplete(new CompletionContext<>(CompletionContext.Status.DISCARD, lbRequest, response)));
                         throw NotFoundException.create(properties.isUse404(), "Unable to find instance for " + url.getHost());
                     }
 
@@ -137,14 +135,13 @@ public class TalbReactiveLoadBalancerClientGlobalFilter implements GlobalFilter,
             talbRequest.getAttributes().putAll(existTalbRequest.getAttributes());
         }
 
-//        TalbReactorLoadBalancer loadBalancer = new TalbReactorLoadBalancer(clientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class), serviceId, this.loadBalancer);
         ReactorLoadBalancer<ServiceInstance> loadBalancer = this.clientFactory.getInstance(serviceId,
                 ReactorServiceInstanceLoadBalancer.class);
         supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(lbRequest));
-        if(!(loadBalancer instanceof TalbReactorLoadBalancer)){
+        if (!(loadBalancer instanceof TalbReactorLoadBalancer)) {
             return loadBalancer.choose(lbRequest);
         }
-        Mono<Response<ServiceInstance>> choose = ((TalbReactorLoadBalancer)loadBalancer).choose(lbRequest,talbRequest);
+        Mono<Response<ServiceInstance>> choose = ((TalbReactorLoadBalancer) loadBalancer).choose(lbRequest, talbRequest);
         //PUT talbRequest
         exchange.getAttributes().put(TalbConstants.TALB_REQUEST, talbRequest);
 

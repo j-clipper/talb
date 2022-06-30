@@ -20,7 +20,7 @@ public interface InstanceFilter {
     /**
      * 过滤器的执行顺序
      *
-     * @return
+     * @return 执行顺序
      */
     default int getOrder() {
         return Ordered.LOWEST_PRECEDENCE;

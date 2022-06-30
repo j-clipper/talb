@@ -17,25 +17,41 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-import static jclipper.talb.base.TalbConstants.INIT_SPAN_ID;
 import static java.util.Collections.emptyMap;
+import static jclipper.talb.base.TalbConstants.INIT_SPAN_ID;
 
 /**
+ * Talb上下文
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/14 17:32.
  */
 @Slf4j
 public class TalbContext extends TraceInfo<TalbContext> {
 
+    /**
+     * 来自服务端（上游服务）的上下文
+     */
     private static final TransmittableThreadLocal<TalbContext> SERVER_CONTEXT = new TransmittableThreadLocal<>();
+    /**
+     * 来自客户端（当前服务）的上下文
+     */
     private static final TransmittableThreadLocal<TalbContext> LOCAL_CONTEXT = new TransmittableThreadLocal<>();
 
 
     private static final Logger TRACE_LOGGER = LoggerFactory.getLogger("traceRecord");
 
+    /**
+     * 是否开启调用时间打印，默认关闭
+     */
     private static boolean enableInvokeTimePrint = false;
 
 
+    /**
+     * 设置调用时间打印的开关
+     *
+     * @param enableInvokeTimePrint 开关
+     */
     public static void setEnableInvokeTimePrint(boolean enableInvokeTimePrint) {
         TalbContext.enableInvokeTimePrint = enableInvokeTimePrint;
     }
@@ -61,7 +77,7 @@ public class TalbContext extends TraceInfo<TalbContext> {
     /**
      * 生成传递给下游应用的TraceInfo信息
      *
-     * @return
+     * @return TraceInfo信息
      */
     public static Map<String, String> getTraceMapForNext() {
         TalbContext context = getLocalContext();
@@ -126,7 +142,7 @@ public class TalbContext extends TraceInfo<TalbContext> {
     /**
      * 获取当前服务的TalbContext
      *
-     * @return
+     * @return TalbContext
      */
     public static TalbContext getServerContext() {
         return SERVER_CONTEXT.get();
@@ -160,7 +176,7 @@ public class TalbContext extends TraceInfo<TalbContext> {
     /**
      * 获取当前服务的TalbContext
      *
-     * @return
+     * @return TalbContext
      */
     public static TalbContext getLocalContext() {
         return LOCAL_CONTEXT.get();

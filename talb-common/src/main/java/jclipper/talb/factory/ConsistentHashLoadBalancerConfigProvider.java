@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * ConsistentHashLoadBalancer 配置提供者
+ * 一致性哈希负载均衡器配置提供者
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 17:32.

@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 处理Table Trace 信息在Dubbo中消费侧的传递和在服务端的获取
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/17 22:20.
  */

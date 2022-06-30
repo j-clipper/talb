@@ -7,7 +7,7 @@ import feign.RequestTemplate;
 import java.util.Map;
 
 /**
- * feign的拦截器
+ * 拦截器feign client中对 Talb Trace的设值传递
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/24 15:43.

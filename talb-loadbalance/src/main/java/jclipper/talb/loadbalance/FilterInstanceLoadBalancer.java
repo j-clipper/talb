@@ -8,6 +8,8 @@ import jclipper.talb.base.TalbRequest;
 import java.util.List;
 
 /**
+ * 使用过滤器{@link InstanceFilter}的负载均衡器
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 19:12.
  */

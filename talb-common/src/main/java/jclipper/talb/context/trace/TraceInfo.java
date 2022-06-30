@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 额外
+ * TraceInfo，保存上下游服务实例的一些
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/21 16:19.
@@ -19,15 +19,44 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TraceInfo<T> implements Serializable {
+    /**
+     * TraceID
+     */
     private String traceId;
+
+    /**
+     * SpanID
+     */
     private String spanId;
+
+    /**
+     * 调用链上的下一个SpanID
+     */
     private String spanIdForNext;
+    /**
+     * 当前服务的host
+     */
     private String host;
+    /**
+     * 当前服务的ip
+     */
     private String ip;
+    /**
+     * 当前服务的名称
+     */
     private String appName;
+    /**
+     * Rpc调用类型
+     */
     private String rpcType;
+    /**
+     * 当前调用的URL
+     */
     private transient String url;
 
+    /**
+     * Talb请求
+     */
     private TalbRequest request;
 
     /**
@@ -201,6 +230,13 @@ public class TraceInfo<T> implements Serializable {
         return (T) this;
     }
 
+
+    /**
+     * 为调用链的下一个调用构造TraceInfo
+     *
+     * @param nextSpanId 下一个调用的SpanID
+     * @return Trace Info Map
+     */
     public Map<String, String> toMapForNext(String nextSpanId) {
         Map<String, String> map = new HashMap<>(8);
         spanIdForNext = nextSpanId;
@@ -213,6 +249,9 @@ public class TraceInfo<T> implements Serializable {
         return map;
     }
 
+    /**
+     * 将当前TraceInfo转换为Map
+     */
     public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>(8);
         map.put(TalbConstants.TRACE_KEY, traceId);
@@ -221,8 +260,6 @@ public class TraceInfo<T> implements Serializable {
         map.put(TalbConstants.HOST_KEY, host);
         map.put(TalbConstants.SERVICE_KEY, appName);
         map.put(TalbConstants.RPC_TYPE_KEY, rpcType);
-
-
         return map;
     }
 }

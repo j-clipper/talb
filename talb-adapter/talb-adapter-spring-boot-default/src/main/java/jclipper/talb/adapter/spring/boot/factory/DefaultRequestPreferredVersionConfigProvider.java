@@ -4,6 +4,8 @@ import jclipper.talb.adapter.spring.boot.configuration.TalbLoadBalanceProperties
 import jclipper.talb.factory.RequestPreferredVersionConfigProvider;
 
 /**
+ * 默认的 {@link RequestPreferredVersionConfigProvider}
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/2/22 10:03.
  */

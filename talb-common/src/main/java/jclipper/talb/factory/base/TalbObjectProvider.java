@@ -12,7 +12,7 @@ public interface TalbObjectProvider<T> {
     /**
      * 获取对象
      *
-     * @return
+     * @return 对象
      */
     T get();
 }

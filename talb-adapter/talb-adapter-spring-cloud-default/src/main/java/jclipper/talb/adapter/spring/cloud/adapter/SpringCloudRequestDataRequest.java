@@ -11,6 +11,8 @@ import java.util.HashMap;
 import static java.util.Collections.emptyMap;
 
 /**
+ * org.springframework.cloud.client.loadbalancer.RequestData适配TalbRequest
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 11:35.
  */

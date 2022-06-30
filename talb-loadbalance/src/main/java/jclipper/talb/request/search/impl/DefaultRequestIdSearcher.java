@@ -5,6 +5,8 @@ import jclipper.talb.request.search.RequestIdSearcher;
 import jclipper.talb.utils.RequestUtils;
 
 /**
+ * 默认的{@link RequestIdSearcher}实现类，调用{@link RequestUtils#findRequestId(TalbRequest)}搜索requestId
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 20:44.
  */

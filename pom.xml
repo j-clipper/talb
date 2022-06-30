@@ -57,11 +57,6 @@
             </dependency>
             <dependency>
                 <groupId>com.wf2311.jclipper</groupId>
-                <artifactId>talb-trace-spring-rest-template</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.wf2311.jclipper</groupId>
                 <artifactId>talb-trace-spring-web</artifactId>
                 <version>${project.version}</version>
             </dependency>

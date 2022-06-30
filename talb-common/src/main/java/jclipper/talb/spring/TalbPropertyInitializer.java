@@ -10,7 +10,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * TLog参数初始化类，适用于springboot和spring
+ * Talb参数初始化类，适用于springboot和spring
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/15 11:03.

@@ -18,6 +18,8 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 /**
+ * Talb ReactorLoadBalancer,使用自定义的{@link LoadBalancer}进行服务实例选择
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/12 10:16.
  */
@@ -52,7 +54,6 @@ public class TalbReactorLoadBalancer implements ReactorServiceInstanceLoadBalanc
     }
 
     private Response<ServiceInstance> processInstanceResponse(ServiceInstanceListSupplier supplier, List<ServiceInstance> serviceInstances, TalbRequest talbRequest) {
-//        if(serviceInstances=)
         List<Instance> adapterInstances = SpringCloudServiceInstance2InstanceAdapter.adapters(serviceInstances);
         Instance choose = loadBalancer.choose(adapterInstances, talbRequest);
 

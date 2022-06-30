@@ -12,17 +12,17 @@ public interface RequestPreferredVersionSearcher extends RequestContentSearcher<
     /**
      * 搜索并传递
      *
-     * @param request
-     * @return
+     * @param request TalbRequest
+     * @return preferredVersions
      */
     @Override
     default Set<String> searchAndTransmit(TalbRequest request) {
-        Set<String> preferredAddress = search(request);
-        if (preferredAddress != null) {
-            //如果找到preferredNetworks后，将其缓存到TalbRequest中，用于透传
-            request.putAttribute(TalbRequest.PREFERRED_VERSION_KEY, preferredAddress);
+        Set<String> preferredVersions = search(request);
+        if (preferredVersions != null) {
+            //如果找到preferredVersions后，将其缓存到TalbRequest中，用于透传
+            request.putAttribute(TalbRequest.PREFERRED_VERSION_KEY, preferredVersions);
         }
-        return preferredAddress;
+        return preferredVersions;
     }
 
 }

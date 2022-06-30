@@ -14,6 +14,7 @@ import static jclipper.talb.base.TalbRequest.*;
 
 
 /**
+ * 请求工具类
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/12 11:53.
  */

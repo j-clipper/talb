@@ -8,7 +8,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * Trace信息传递 GlobalFilter
+ * Trace信息传递后置处理 GlobalFilter
  *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/14 19:22.
@@ -21,6 +21,6 @@ public class TalbGatewayTracePostHandleFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return TalbReactiveLoadBalancerClientGlobalFilter.LOAD_BALANCER_CLIENT_FILTER_ORDER + 1;
+        return TalbReactiveLoadBalancerClientGlobalFilter.TALB_LOAD_BALANCER_CLIENT_FILTER_ORDER + 1;
     }
 }

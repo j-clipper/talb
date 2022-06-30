@@ -6,6 +6,8 @@ import jclipper.talb.base.TalbRequest;
 import java.util.Set;
 
 /**
+ * 从{@link TalbRequest}中搜索PreferredIpAddress
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/13 20:45.
  */

@@ -4,6 +4,8 @@ import jclipper.talb.factory.base.ConfigProvider;
 import jclipper.talb.utils.LocalhostUtil;
 
 /**
+ * 配置提供者:获取App信息
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/20 09:22.
  */

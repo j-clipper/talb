@@ -4,13 +4,22 @@ import java.net.URI;
 import java.util.Map;
 
 /**
+ * 记录请求的属性相关信息，
+ * 除{@link TalbAttributesRequest#getServiceId()} ()}、{@link TalbAttributesRequest#getAttributes()}、{@link TalbAttributesRequest#getAttribute(String)}外，其他方法抛出{@link UnsupportedOperationException}异常
+ *
  * @author <a href="mailto:wf2311@163.com">wf2311</a>
  * @since 2022/1/17 21:40.
  */
 public class TalbAttributesRequest implements TalbRequest {
 
+    /**
+     * 属性MAP
+     */
     protected Map<String, Object> attributes;
 
+    /**
+     * 服务ID
+     */
     protected String serviceId;
 
     public TalbAttributesRequest(Map<String, Object> attributes) {
@@ -24,7 +33,7 @@ public class TalbAttributesRequest implements TalbRequest {
 
     @Override
     public String getServiceId() {
-        return null;
+        return serviceId;
     }
 
     @Override
